@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Dice Game</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower|Lobster" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1>Refresh Me</h1>
+
+    <div class="dice">
+      <p>Player 1</p>
+      <img class="img1" src="images/dice6.png">
+    </div>
+
+    <div class="dice">
+      <p>Player 2</p>
+      <img class="img2" src="images/dice6.png">
+    </div>
+
+    
+  </div>
+  <div class="btn">
+  <button id="refreshButton">play</button>
+  </div>
+  <script>
+    var refreshButton = document.getElementById("refreshButton");
+    refreshButton.addEventListener("click", function() {
+      location.reload();
+    });
+    var randomNum1 = Math.floor(Math.random() * 6)+1;
+    var randomDiceimg1 = "dice"+randomNum1+".png";
+    var randomImagesrc = "images/"+randomDiceimg1;
+    var img1=document.querySelectorAll("img")[0];
+    img1.setAttribute("src",randomImagesrc);
+    var randomNum2 = Math.floor(Math.random() * 6) + 1;
+    var randomImagesrc2 = "images/dice" + randomNum2 + ".png";
+    document.querySelectorAll("img")[1].setAttribute("src", randomImagesrc2);
+    if(randomNum1>randomNum2)
+    {
+        document.querySelector("h1").innerHTML = "🚩 Player 1 Wins!";
+    }
+    else if(randomNum2>randomNum1)
+    {
+        document.querySelector("h1").innerHTML="🚩 Player 2 Wins!";
+    }
+    else
+    {
+        document.querySelector("h1").innerHTML="Draw!";
+    }
+  </script>
+</body>
+<footer>
+  Enjoy this fun game
+</footer>
+</html>
