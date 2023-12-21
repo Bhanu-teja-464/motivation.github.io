@@ -1,0 +1,428 @@
+activity_main.xml (Linear layout)
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="UserName"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="13dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword" />
+
+    <EditText
+        android:id="@+id/editTextTextPostalAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="7dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPostalAddress" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="154dp">
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="238dp"
+        android:layout_height="2dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="174dp"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Submit" />
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+activity_main2.xml (Realtive lauout)
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="UserName"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextText"
+        android:layout_alignStart="@+id/editTextText"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPostalAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTextPassword"
+        android:layout_alignStart="@+id/editTextTextPassword"
+        android:ems="10"
+        android:hint="Address"
+        android:inputType="textPostalAddress"
+        android:minHeight="48dp" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="213dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTextPostalAddress"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="0dp">
+
+        <RadioButton
+            android:id="@+id/radioMale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Male" />
+
+        <RadioButton
+            android:id="@+id/radioFemale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female" />
+    </RadioGroup>
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="238dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/radioGroup"
+        android:layout_centerHorizontal="true"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNumber"
+        android:layout_centerHorizontal="true"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePicker"
+        android:layout_centerHorizontal="true"
+        android:minHeight="48dp" />
+
+    <Button
+    android:id="@+id/button"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/spinner"
+    android:layout_centerHorizontal="true"
+    android:text="Submit" />
+
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+activity_main3.xml (Grid layout)
+
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Username:" />
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:hint="UserName"
+        android:inputType="text" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Password:" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address:" />
+
+    <EditText
+        android:id="@+id/editTextTextPostalAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:hint="Address"
+        android:inputType="textPostalAddress"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gender:" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1">
+
+        <RadioButton
+        android:id="@+id/radioMale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Male" />
+
+        <RadioButton
+        android:id="@+id/radioFemale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Female" />
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Age:" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:hint="Age"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Date:" />
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spinner:" />
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_columnWeight="1"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:text="Submit" />
+
+</GridLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+MainActivity.java
+
+package com.example.week2;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.DatePicker;
+
+public class MainActivity extends AppCompatActivity {
+    private EditText edUser, edPass, edAddress, edAge, edDate;
+    private RadioGroup radioGroupGender;
+    private RadioButton rdMale, rdFe, rdOth;
+    private DatePicker dp;
+    private Spinner spSt;
+    private Button bt;
+    String[] states = {
+            "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh",
+            "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand",
+            "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur",
+            "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+            "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+            "Uttar Pradesh", "Uttarakhand", "West Bengal"
+    };
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main3);
+
+        edUser=findViewById(R.id.editTextText);
+        edPass=findViewById(R.id.editTextTextPassword);
+        edAddress=findViewById(R.id.editTextTextPostalAddress);
+        radioGroupGender=findViewById(R.id.radioGroup);
+        rdMale=findViewById(R.id.radioMale);
+        rdFe=findViewById(R.id.radioFemale);
+        edAge=findViewById(R.id.editTextNumber);
+        dp=findViewById(R.id.datePicker);
+        spSt=findViewById(R.id.spinner);
+        bt=findViewById(R.id.button);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, states);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spSt.setAdapter(adapter);
+
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userName=edUser.getText().toString();
+                String password=edPass.getText().toString();
+                String address=edAddress.getText().toString();
+                int genderId=radioGroupGender.getCheckedRadioButtonId();
+                String gender=(genderId == R.id.radioMale)?"Male" : "Female";
+                String age=edAge.getText().toString();
+                int day=dp.getDayOfMonth();
+                int month=dp.getMonth()+1;
+                int year=dp.getYear();
+                String dob=day + "/" + month +"/" + year;
+                String st=spSt.getSelectedItem().toString();
+
+                String userData="User Name: " + userName + "\n"+
+                        "Password: " + password +"\n" +
+                        "Address: " + address + "\n" +
+                        "Gender: " + gender + "\n" +
+                        "Age: " + age + "\n" +
+                        "Date of Birth: " + dob + "\n" +
+                        "Selected State: " + st;
+
+                Toast.makeText(MainActivity.this, userData, Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+}

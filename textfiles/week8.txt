@@ -1,0 +1,265 @@
+activity_main.xml
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="106dp"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:text="Name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:autofillHints=""
+        tools:ignore="HardcodedText,LabelFor" />
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="229dp"
+        android:ems="10"
+        android:inputType="text"
+        android:minHeight="48dp"
+        android:text="Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="Autofill,HardcodedText,LabelFor" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="13dp"
+        android:layout_marginEnd="21dp"
+        android:text="add"
+        app:layout_constraintBaseline_toBaselineOf="@+id/button2"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText,RtlCompat" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="277dp"
+        android:text="view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        tools:ignore="HardcodedText" />
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+MainActivity.java
+
+package com.example.week8;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.DialogInterface;
+import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.week8.DBhelper.Database_helper;
+
+public class MainActivity extends AppCompatActivity {
+    Database_helper db;
+    EditText name, pass;
+    Button add, view;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        name = findViewById(R.id.editTextText);
+        pass = findViewById(R.id.editTextText2);
+        add = findViewById(R.id.button);
+        view = findViewById(R.id.button2);
+        db = new Database_helper(this);
+
+        ADD();
+        VIEW();
+    }
+
+    private void VIEW() {
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Cursor res = db.ViewAll();
+                if (res.getCount() == 0) {
+                    ShowMessage("Error", "No data found");
+                    return;
+                }
+                StringBuffer buffer = new StringBuffer();
+                while (res.moveToNext()) {
+                    buffer.append("Name: ").append(res.getString(0)).append("\n");
+                    buffer.append("Password: ").append(res.getString(1)).append("\n\n");
+                }
+                ShowMessage("Details", buffer.toString());
+                res.close(); // Close the Cursor after using it
+            }
+        });
+    }
+
+    public void ADD() {
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Add this?").setCancelable(false).setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        boolean isInserted = db.insertData(name.getText().toString(), pass.getText().toString());
+                        if (isInserted) {
+                            Toast.makeText(MainActivity.this, "Data inserted", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Not inserted", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.setTitle("Confirm");
+                alertDialog.show();
+            }
+        });
+    }
+
+    public void ShowMessage(String title, String Message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(true);
+        builder.setTitle(title);
+        builder.setMessage(Message);
+        builder.show();
+    }
+}
+
+
+
+
+
+
+Database_helper.java
+
+package com.example.week8.DBhelper;
+
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+import androidx.annotation.Nullable;
+
+public class Database_helper extends SQLiteOpenHelper {
+    public static final String database_Name = "mydb.db";
+    public static final String table_name = "mytable";
+
+    public static final String column1 = "name";
+    public static final String column2 = "pass";
+
+    public Database_helper(@Nullable Context context) {
+        super(context, database_Name, null, 1);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        db.execSQL("create table " + table_name + " (" + column1 + " TEXT, " + column2 + " TEXT)");
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLE IF EXISTS " + table_name);
+        onCreate(db);
+    }
+
+    public boolean insertData(String name, String pass) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(column1, name);
+        contentValues.put(column2, pass);
+        long result = db.insert(table_name, null, contentValues);
+        return result != -1;
+    }
+
+    public Cursor ViewAll() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.query(table_name, null, null, null, null, null, null);
+    }
+}
+
+
+
+
+
+
+
+build.gradle.kts
+
+plugins {
+    id("com.android.application")
+}
+
+android {
+    namespace = "com.example.week8"
+    compileSdk = 33
+
+    defaultConfig {
+        applicationId = "com.example.week8"
+        minSdk = 26
+        targetSdk = 31
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            isMinifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+        }
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}

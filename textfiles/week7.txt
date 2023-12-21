@@ -1,0 +1,233 @@
+activity_main.xml
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="UserName"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextText"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:minHeight="48dp"
+        tools:ignore="UnknownId" />
+
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextTextPassword"
+        android:ems="10"
+        android:hint="Phone No"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <EditText
+        android:id="@+id/editTextNumber2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNumber"
+        android:ems="10"
+        android:hint="Age"
+        android:inputType="number"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="210dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/editTextNumber2"
+        android:text="Submit" />
+
+</RelativeLayout>
+
+
+
+
+MainActivity.java
+
+package com.example.week7;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+
+public class MainActivity extends AppCompatActivity {
+
+    // creating variables for our edittext, button and dbhandler
+    private EditText user, pass, phone, age;
+    private Button bt;
+    public DBHelper dbHandler;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // initializing all our variables.
+        user = findViewById(R.id.editTextText);
+        pass = findViewById(R.id.editTextTextPassword);
+        phone = findViewById(R.id.editTextNumber);
+        age = findViewById(R.id.editTextNumber2);
+        bt = findViewById(R.id.button);
+
+        // creating a new dbhelper class
+        // and passing our context to it.
+        dbHandler = new DBHelper(MainActivity.this);
+
+        // below line is to add on click listener for our add course button.
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // below line is to get data from all edit text fields.
+                String u = user.getText().toString();
+                String p = pass.getText().toString();
+                String ph = phone.getText().toString();
+                String a = age.getText().toString();
+
+                // validating if the text fields are empty or not.
+                if (u.isEmpty() && p.isEmpty() && ph.isEmpty() && a.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "Please enter all the data..", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                // on below line we are calling a method to add new
+                // course to sqlite data and pass all our values to it.
+                dbHandler.adduserdetails(u, p, ph, a);
+
+                // after adding the data we are displaying a toast message.
+                Toast.makeText(MainActivity.this, "Course has been added.", Toast.LENGTH_SHORT).show();
+                user.setText("");
+                pass.setText("");
+                phone.setText("");
+                age.setText("");
+            }
+        });
+    }
+}
+
+
+
+
+
+
+DBHelper.java
+
+package com.example.week7;
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
+public class DBHelper  extends SQLiteOpenHelper {
+
+    // creating a constant variables for our database.
+    // below variable is for our database name.
+    private static final String DB_NAME = "coursedb";
+
+    // below int is our database version
+    private static final int DB_VERSION = 1;
+
+    // below variable is for our table name.
+    private static final String TABLE_NAME = "userdetails";
+
+    // below variable is for our id column.
+    private static final String ID_COL = "id";
+
+    // below variable is for our course name column
+    private static final String user_col = "user";
+
+    // below variable id for our course duration column.
+    private static final String pass_col = "pass";
+
+    // below variable for our course description column.
+    private static final String age_col = "age";
+
+    // below variable is for our course tracks column.
+    private static final String phone_col = "phone";
+
+    // creating a constructor for our database handler.
+    public DBHelper(Context context) {
+        super(context, DB_NAME, null, DB_VERSION);
+    }
+
+    // below method is for creating a database by running a sqlite query
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        // on below line we are creating
+        // an sqlite query and we are
+        // setting our column names
+        // along with their data types.
+        String query = "CREATE TABLE " + TABLE_NAME + " ("
+                + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + user_col + " TEXT,"
+                + pass_col + " TEXT,"
+                + phone_col + " INTEGER,"
+                + age_col + " INTEGER)";
+
+        // at last we are calling a exec sql
+        // method to execute above sql query
+        db.execSQL(query);
+    }
+
+    // this method is use to add new course to our sqlite database.
+    public void adduserdetails(String user, String pass, String phone, String age) {
+
+        // on below line we are creating a variable for
+        // our sqlite database and calling writable method
+        // as we are writing data in our database.
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // on below line we are creating a
+        // variable for content values.
+        ContentValues values = new ContentValues();
+
+        // on below line we are passing all values
+        // along with its key and value pair.
+        values.put(user_col, user);
+        values.put(pass_col, pass);
+        values.put(phone_col, Integer.parseInt(phone));
+        values.put(age_col, Integer.parseInt(age));
+        // after adding all values we are passing
+        // content values to our table.
+        db.insert(TABLE_NAME, null, values);
+
+        // at last we are closing our
+        // database after adding database.
+        db.close();
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // this method is called to check if the table exists already.
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        onCreate(db);
+    }
+}
+

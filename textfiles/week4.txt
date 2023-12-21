@@ -1,0 +1,112 @@
+activity_main.xml
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <EditText
+        android:id="@+id/editTextText2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Enter phone number" />
+
+    <EditText
+        android:id="@+id/editTextText3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Enter message"
+        android:inputType="text"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="send message" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dial" />
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+MainActivity.java
+
+package com.example.week4;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Button bt=findViewById(R.id.button3);
+        final EditText mp=findViewById(R.id.editTextText2);
+
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String ph=mp.getText().toString();
+                if(!TextUtils.isEmpty(ph)){
+                    String dial="tel: " + ph;
+                    startActivity(new Intent(Intent.ACTION_DIAL, Uri.parse(dial)));
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Enter a phone number", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        Button sm=findViewById(R.id.button2);
+        EditText mes=findViewById(R.id.editTextText3);
+        sm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String sms=mes.getText().toString();
+                String phn=mp.getText().toString();
+                if(!TextUtils.isEmpty(sms) && !TextUtils.isEmpty(phn)){
+                    Intent smi = new Intent(Intent.ACTION_SENDTO, Uri.parse("smsto:" + phn));
+                    smi.putExtra("sms_body", sms);
+                    startActivity(smi);
+                }
+            }
+        });
+    }
+}

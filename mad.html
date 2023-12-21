@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Files Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: #fff;
+        }
+
+        .file-container {
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .file-link {
+            display: block;
+            margin: 10px;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Mad Lab Programs</h1>
+</header>
+
+<div id="fileContainer" class="file-container">
+    <!-- Text file links will be added here dynamically -->
+</div>
+
+<script>
+    // List of text files with filenames and display names
+    const textFiles = [
+        { filename: 'textfiles/week1a.txt', displayName: 'Week 1-a  (Hello + name)' },
+        { filename: 'textfiles/week1b.txt', displayName: 'Week 1-b(Hello + name "OK" Button)' },
+        { filename: 'textfiles/week2.txt', displayName: 'Week 2(BioData)' },
+        { filename: 'textfiles/week4.txt', displayName: 'Week 4(Menu with 3 Options)' },
+        { filename: 'textfiles/week5.txt', displayName: 'Week 5(Notification)' },
+        { filename: 'textfiles/week6.txt', displayName: 'Week 6(TextFile-Username,Password)' },
+        { filename: 'textfiles/week7.txt', displayName: 'Week 7(User Details in Database)' },
+        { filename: 'textfiles/week8.txt', displayName: 'Week 8(Login Details)' },
+        { filename: 'textfiles/week9.txt', displayName: 'Week 9(Admin Application)' },
+        { filename: 'textfiles/week12.txt', displayName: 'Week 12(Alarm)' },
+        { filename: 'textfiles/week13.txt', displayName: 'Week 13(URL)' }
+    ];
+
+    // Function to dynamically create links for each text file
+    function createFileLinks() {
+        const fileContainer = document.getElementById('fileContainer');
+
+        textFiles.forEach(file => {
+            const fileLink = document.createElement('a');
+            fileLink.href = file.filename;
+            fileLink.target = '_blank';
+            fileLink.textContent = file.displayName;
+            fileLink.className = 'file-link';
+
+            fileContainer.appendChild(fileLink);
+        });
+    }
+
+    // Call the function to create file links when the page loads
+    window.onload = createFileLinks;
+</script>
+
+</body>
+</html>
