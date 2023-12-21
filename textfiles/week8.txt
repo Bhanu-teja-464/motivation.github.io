@@ -1,9 +1,6 @@
 activity_main.xml
 
 
-
-
-
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
  xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -44,14 +41,9 @@ activity_main.xml
 </RelativeLayout>
 
 
-
-
-
-
 MainActivity.java
 
 package com.example.week8;
-
 import android.annotation.SuppressLint;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -145,149 +137,9 @@ Toast.LENGTH_SHORT).show();
 }
 
 
-
-
-
-
 DBHell.java
 
 
-package com.example.week8.DBhelper;
-
-WEEK 8 MAD LAB
-activity_main.xml
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
- xmlns:app="http://schemas.android.com/apk/res-auto"
- xmlns:tools="http://schemas.android.com/tools"
- android:layout_width="match_parent"
- android:layout_height="match_parent"
- android:gravity="center"
- tools:context=".MainActivity">
- <EditText
- android:id="@+id/editTextText"
- android:layout_width="wrap_content"
- android:layout_height="wrap_content"
- android:ems="10"
- android:hint="Username"
- android:inputType="text"
- android:minHeight="48dp" />
- <EditText
- android:id="@+id/editTextTextPassword"
- android:layout_width="wrap_content"
- android:layout_height="wrap_content"
- android:layout_below="@+id/editTextText"
- android:ems="10"
- android:hint="Password"
- android:inputType="textPassword"
- android:minHeight="48dp" />
- <Button
- android:id="@+id/button"
- android:layout_width="210dp"
- android:layout_height="wrap_content"
- android:layout_below="@+id/editTextTextPassword"
- android:text="Save details" />
- <Button
- android:id="@+id/button2"
- android:layout_width="210dp"
- android:layout_height="wrap_content"
- android:layout_below="@+id/button"
- android:text="Login" />
-</RelativeLayout>
-MainActivity.java
-package com.example.week8;
-import android.annotation.SuppressLint;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-public class MainActivity extends AppCompatActivity {
- // creating variables for our edittext, button and dbhandler
- private EditText user, pass;
- private Button bt, bt2;
- public DBHell dbHandler;
- public DBHelC dbcreate;
- @Override
- protected void onCreate(Bundle savedInstanceState) {
- super.onCreate(savedInstanceState);
- setContentView(R.layout.activity_main);
- // initializing all our variables.
- user = findViewById(R.id.editTextText);
- pass = findViewById(R.id.editTextTextPassword);
- bt = findViewById(R.id.button);
- bt2=findViewById(R.id.button2);
- // creating a new dbhelper class
- // and passing our context to it.
- dbHandler = new DBHell(MainActivity.this);
- dbcreate = new DBHelC(MainActivity.this);
- SQLiteDatabase db = dbHandler.getReadableDatabase();
- bt.setOnClickListener(new View.OnClickListener() {
- @Override
- public void onClick(View v) {
- // Call a method to create the database table.
- String u = user.getText().toString();
- String p = pass.getText().toString();
- // validating if the text fields are empty or not.
- if (u.isEmpty() && p.isEmpty()) {
- Toast.makeText(MainActivity.this, "Please enter all the data..",
-Toast.LENGTH_SHORT).show();
- return;
- }
- // on below line we are calling a method to add new
- // course to sqlite data and pass all our values to it.
- dbcreate.adduserdetails(u, p);
- // after adding the data we are displaying a toast message.
- Toast.makeText(MainActivity.this, "Data added.", Toast.LENGTH_SHORT).show();
- user.setText("");
- pass.setText("");
- }
- });
- // below line is to add on click listener for our add course button.
- bt2.setOnClickListener(new View.OnClickListener() {
- @Override
- public void onClick(View v) {
- // below line is to get data from all edit text fields.
- String u = user.getText().toString();
- String p = pass.getText().toString();
- // validating if the text fields are empty or not.
- if (u.isEmpty() && p.isEmpty()) {
- Toast.makeText(MainActivity.this, "Please enter all the data..",
-Toast.LENGTH_SHORT).show();
- return;
- }
- Cursor c= dbHandler.getUserDetails(u, p);
- if (c.moveToFirst()) {
- // Process the results
- @SuppressLint("Range") String username = c.getString(c.getColumnIndex("user"));
- @SuppressLint("Range") String password = c.getString(c.getColumnIndex("pass"));
- // ...
- showSuccessDialog();
- } else {
- showFailureDialog(); }
- c.close();
- db.close();
- }
- });
- }
- private void showSuccessDialog() {
- AlertDialog.Builder builder = new AlertDialog.Builder(this);
- builder.setMessage("Login successful!");
- builder.setPositiveButton("OK", null);
- builder.show();
- }
- private void showFailureDialog() {
- AlertDialog.Builder builder = new AlertDialog.Builder(this);
- builder.setMessage("Login failed. Please check your credentials.");
- builder.setPositiveButton("OK", null);
- builder.show();
- }
-}
-DBHell.java
 package com.example.week8;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
@@ -427,7 +279,6 @@ public class DBHelC extends SQLiteOpenHelper {
  onCreate(db);
  }
 }
-
 
 
 
