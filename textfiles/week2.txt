@@ -2,8 +2,6 @@ activity_main.xml (Linear layout)
 
 
 
-
-
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -89,10 +87,6 @@ activity_main.xml (Linear layout)
         android:text="Submit" />
 
 </LinearLayout>
-
-
-
-
 
 
 
@@ -199,10 +193,6 @@ activity_main2.xml (Realtive lauout)
     android:text="Submit" />
 
 </RelativeLayout>
-
-
-
-
 
 
 
@@ -333,15 +323,6 @@ activity_main3.xml (Grid layout)
         android:text="Submit" />
 
 </GridLayout>
-
-
-
-
-
-
-
-
-
 
 
 

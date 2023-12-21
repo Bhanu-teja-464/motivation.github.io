@@ -9,54 +9,49 @@ activity_main.xml
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:padding="80dp"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="wrap_content"
+        android:id="@+id/editTextUserName"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="UserName"
-        android:inputType="text"
-        android:minHeight="48dp" />
+        android:hint="User Name"
+        />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextText"
-        android:ems="10"
+        android:id="@+id/editTextPassword"
         android:hint="Password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:minHeight="48dp"
-        tools:ignore="UnknownId" />
+        android:layout_below="@+id/editTextUserName"
+        />
+    <EditText
+        android:id="@+id/phone"
+        android:hint="phone number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:layout_below="@+id/editTextPassword"
+        />
+
 
     <EditText
-        android:id="@+id/editTextNumber"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextTextPassword"
-        android:ems="10"
-        android:hint="Phone No"
-        android:inputType="number"
-        android:minHeight="48dp" />
-
-    <EditText
-        android:id="@+id/editTextNumber2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextNumber"
-        android:ems="10"
+        android:id="@+id/editTextAge"
         android:hint="Age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
         android:inputType="number"
-        android:minHeight="48dp" />
+        android:layout_below="@+id/phone"/>
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="210dp"
+        android:id="@+id/buttonSubmit"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextNumber2"
+        android:layout_below="@+id/editTextAge"
         android:text="Submit" />
 
 </RelativeLayout>
@@ -67,6 +62,8 @@ activity_main.xml
 MainActivity.java
 
 package com.example.week7;
+
+package com.example.rage1;
 
 import android.os.Bundle;
 import android.view.View;
@@ -82,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
     // creating variables for our edittext, button and dbhandler
     private EditText user, pass, phone, age;
     private Button bt;
-    public DBHelper dbHandler;
+    public DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,15 +87,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // initializing all our variables.
-        user = findViewById(R.id.editTextText);
-        pass = findViewById(R.id.editTextTextPassword);
-        phone = findViewById(R.id.editTextNumber);
-        age = findViewById(R.id.editTextNumber2);
-        bt = findViewById(R.id.button);
+        user = findViewById(R.id.editTextUserName);
+        pass = findViewById(R.id.editTextPassword);
+        phone = findViewById(R.id.phone);
+        age = findViewById(R.id.editTextAge);
+        bt = findViewById(R.id.buttonSubmit);
 
-        // creating a new dbhelper class
+        // creating a new dbhandler class
         // and passing our context to it.
-        dbHandler = new DBHelper(MainActivity.this);
+        dbHandler = new DBHandler(MainActivity.this);
 
         // below line is to add on click listener for our add course button.
         bt.setOnClickListener(new View.OnClickListener() {
@@ -128,8 +125,8 @@ public class MainActivity extends AppCompatActivity {
                 phone.setText("");
                 age.setText("");
             }
-        });
-    }
+        });
+    }
 }
 
 
@@ -137,15 +134,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-DBHelper.java
+DBHandler.java
 
 package com.example.week7;
+package com.example.blahblah;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class DBHelper  extends SQLiteOpenHelper {
+
+public class DBHandler extends SQLiteOpenHelper {
 
     // creating a constant variables for our database.
     // below variable is for our database name.
@@ -173,7 +172,7 @@ public class DBHelper  extends SQLiteOpenHelper {
     private static final String phone_col = "phone";
 
     // creating a constructor for our database handler.
-    public DBHelper(Context context) {
+    public DBHandler(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 
@@ -204,8 +203,6 @@ public class DBHelper  extends SQLiteOpenHelper {
         // as we are writing data in our database.
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // on below line we are creating a
-        // variable for content values.
         ContentValues values = new ContentValues();
 
         // on below line we are passing all values
@@ -231,3 +228,13 @@ public class DBHelper  extends SQLiteOpenHelper {
     }
 }
 
+
+
+in gradle you have to update this line in dependencies
+    implementation ("androidx.sqlite:sqlite:2.2.0")
+
+
+in manifest 
+
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />

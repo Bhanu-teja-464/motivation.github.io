@@ -38,9 +38,6 @@ activity_main.xml
 
 
 
-
-
-
 MainActivity.java
 
 package com.example.week1b;
